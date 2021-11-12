@@ -13,29 +13,29 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
         /// Получает список всех книг
         /// </summary>
         /// <returns>Список книг</returns>
-        Task<IEnumerable<BookDto>> GetAllBooksAsync(GetAllBooksModel model);
+        IEnumerable<BookDto> GetAllBooks(GetAllBooksModel model);
         /// <summary>
         /// Получает книги по идентификатору автора
         /// </summary>
         /// <param name="authorId">Идентификатор автора книг</param>
         /// <returns>Список книг</returns>
-        Task<IEnumerable<BookDto>> GetBooksByAuthorId(int authorId);
+        IEnumerable<BookDto> GetBooksByAuthorId(int authorId);
         /// <summary>
         /// Получает список идентификаторов авторов книг
         /// </summary>
         /// <returns>Список идентификаторов авторов книг</returns>
-        Task<IEnumerable<int>> GetBookAuthorsIdsAsync();
+        IEnumerable<int> GetBookAuthorsIds();
         /// <summary>
         /// Добавляет новую книгу
         /// </summary>
         /// <param name="book">Новая книга</param>
         /// <returns>Результат добавления новой книги (добавлена/не добавлена)</returns>
-        Task<bool> AddBookAsync(BookDto book);
+        bool AddBook(BookDto book);
         /// <summary>
         /// Удаляет книгу
         /// </summary>
         /// <param name="id">Идентификатор удаляемой книги</param>
         /// <returns>Результат удаления книги (удалена/не удалена)</returns>
-        Task<bool> DeleteBookAsync(int id);
+        bool DeleteBook(int id);
     }
 }

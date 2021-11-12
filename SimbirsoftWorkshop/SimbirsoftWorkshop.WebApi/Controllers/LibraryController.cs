@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimbirsoftWorkshop.WebApi.Models;
-using SimbirsoftWorkshop.WebApi.Services;
+using SimbirsoftWorkshop.WebApi.Repositories;
 
 namespace SimbirsoftWorkshop.WebApi.Controllers
 {
@@ -13,17 +12,17 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
     public class LibraryController : ControllerBase
     {
         /// <summary>
-        /// Сервис по работе с библиотекой книг
+        /// Репозиторий по работе с карточками библиотеки
         /// </summary>
-        private readonly IBookLibraryService humanBookService;
+        private readonly ILibraryCardsRepository libraryCardsRepository;
 
         /// <summary>
         /// Создает новый объект контроллера
         /// </summary>
-        /// <param name="humanBookService">Сервис по работе с библиотекой книг</param>
-        public LibraryController(IBookLibraryService humanBookService)
+        /// <param name="libraryCardsRepository">Репозиторий по работе с карточками библиотеки</param>
+        public LibraryController(ILibraryCardsRepository libraryCardsRepository)
         {
-            this.humanBookService = humanBookService;
+            this.libraryCardsRepository = libraryCardsRepository;
         }
 
         /// <summary>
@@ -34,9 +33,9 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpPost("take-book")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task TakeBookAsync([FromBody] LibraryCardDto libraryCardDto)
+        public void TakeBookAsync([FromBody] LibraryCardDto libraryCardDto)
         {
-            await humanBookService.TakeBookAsync(libraryCardDto);
+            libraryCardsRepository.AddLibraryCard(libraryCardDto);
         }
     }
 }

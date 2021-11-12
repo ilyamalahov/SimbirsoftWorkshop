@@ -13,6 +13,6 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
         /// </summary>
         /// <param name="libraryCard">Новая карточка товара</param>
         /// <returns>Результат добавления</returns>
-        Task<bool> AddLibraryCardAsync(LibraryCardDto libraryCard);
+        bool AddLibraryCard(LibraryCardDto libraryCard);
     }
 }

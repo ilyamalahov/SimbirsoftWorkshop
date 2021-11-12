@@ -13,30 +13,30 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
         /// Получает список всех людей
         /// </summary>
         /// <returns>Список людей</returns>
-        Task<IEnumerable<HumanDto>> GetAllHumansAsync();
+        IEnumerable<HumanDto> GetAllHumans();
         /// <summary>
         /// Получает список людей по их идентификаторам
         /// </summary>
         /// <param name="ids">Идентификаторы людей</param>
         /// <returns>Список людей</returns>
-        Task<IEnumerable<HumanDto>> GetHumansByIdsAsync(IEnumerable<int> ids);
+        IEnumerable<HumanDto> GetHumansByIds(IEnumerable<int> ids);
         /// <summary>
         /// Производит поиск людей по имени, фамилии или отчеству
         /// </summary>
         /// <param name="term">Искомое выражение</param>
         /// <returns>Список людей</returns>
-        Task<IEnumerable<HumanDto>> SearchHumansByTermAsync(string term);
+        IEnumerable<HumanDto> SearchHumansByTerm(string term);
         /// <summary>
         /// Добавляет нового человека
         /// </summary>
         /// <param name="human">Новый человек</param>
         /// <returns>Результат добавления</returns>
-        Task<bool> AddHumanAsync(HumanDto human);
+        bool AddHuman(HumanDto human);
         /// <summary>
         /// Удаляет человека по идентификатору
         /// </summary>
         /// <param name="id">Идентификатор человека</param>
         /// <returns>Результат удаления</returns>
-        Task<bool> DeleteHumanAsync(int id);
+        bool DeleteHumanAsync(int id);
     }
 }

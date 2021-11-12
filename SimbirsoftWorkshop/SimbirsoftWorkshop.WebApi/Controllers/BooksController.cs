@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SimbirsoftWorkshop.WebApi.Models;
-using SimbirsoftWorkshop.WebApi.Services;
+using SimbirsoftWorkshop.WebApi.Repositories;
 
 namespace SimbirsoftWorkshop.WebApi.Controllers
 {
@@ -14,17 +13,17 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
     public class BooksController : ControllerBase
     {
         /// <summary>
-        /// Сервис по работе с библиотекой книг
+        /// Репозиторий для работы с книгами
         /// </summary>
-        private readonly IBookLibraryService humanBookService;
+        private readonly IBooksRepository booksRepository;
 
         /// <summary>
         /// Создает новый объект контроллера
         /// </summary>
-        /// <param name="humanBookService">Сервис по работе с библиотекой книг</param>
-        public BooksController(IBookLibraryService humanBookService)
+        /// <param name="booksRepository">Репозиторий для работы с книгами</param>
+        public BooksController(IBooksRepository booksRepository)
         {
-            this.humanBookService = humanBookService;
+            this.booksRepository = booksRepository;
         }
 
         /// <summary>
@@ -35,9 +34,9 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<BookDto>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IEnumerable<BookDto>> GetAllBooksAsync([FromQuery] GetAllBooksModel model)
+        public IEnumerable<BookDto> GetAllBooks([FromQuery] GetAllBooksModel model)
         {
-            return await humanBookService.GetAllBooksAsync(model);
+            return booksRepository.GetAllBooks(model);
         }
 
         /// <summary>
@@ -48,9 +47,9 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpGet("by-author/{authorId}")]
         [ProducesResponseType(typeof(IEnumerable<BookDto>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IEnumerable<BookDto>> GetBooksByAuthorId([FromRoute] int authorId)
+        public IEnumerable<BookDto> GetBooksByAuthorId([FromRoute] int authorId)
         {
-            return await humanBookService.GetBooksByAuthorIdAsync(authorId);
+            return booksRepository.GetBooksByAuthorId(authorId);
         }
 
         /// <summary>
@@ -61,9 +60,11 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(BookDto), 200)]
         [ProducesResponseType(500)]
-        public async Task<BookDto> AddBookAsync([FromBody] BookDto bookDto)
+        public BookDto AddBook([FromBody] BookDto bookDto)
         {
-            return await humanBookService.AddBookAsync(bookDto);
+            booksRepository.AddBook(bookDto);
+
+            return bookDto;
         }
 
         /// <summary>
@@ -73,9 +74,9 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         /// <returns>Результат удаления</returns>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(500)]
-        public async Task DeleteBookAsync([FromRoute] int id)
+        public void DeleteBook([FromRoute] int id)
         {
-            await humanBookService.DeleteBookAsync(id);
+            booksRepository.DeleteBook(id);
         }
     }
 }

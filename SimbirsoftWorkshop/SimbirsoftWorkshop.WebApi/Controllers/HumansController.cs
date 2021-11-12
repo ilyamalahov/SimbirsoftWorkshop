@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SimbirsoftWorkshop.WebApi.Models;
-using SimbirsoftWorkshop.WebApi.Services;
+using SimbirsoftWorkshop.WebApi.Repositories;
 
 namespace SimbirsoftWorkshop.WebApi.Controllers
 {
@@ -14,17 +13,23 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
     public class HumansController : ControllerBase
     {
         /// <summary>
-        /// Сервис по работе с библиотекой книг
+        /// Репозиторий для работы с людьми
         /// </summary>
-        private readonly IBookLibraryService humanBookService;
+        private readonly IHumansRepository humansRepository;
+        /// <summary>
+        /// Репозиторий для работы с книгами
+        /// </summary>
+        private readonly IBooksRepository booksRepository;
 
         /// <summary>
         /// Создает новый контроллер
         /// </summary>
-        /// <param name="humanBookService">Сервис по работе с библиотекой книг</param>
-        public HumansController(IBookLibraryService humanBookService)
+        /// <param name="humansRepository">Репозиторий для работы с людьми</param>
+        /// <param name="booksRepository">Репозиторий для работы с книгами</param>
+        public HumansController(IHumansRepository humansRepository, IBooksRepository booksRepository)
         {
-            this.humanBookService = humanBookService;
+            this.humansRepository = humansRepository;
+            this.booksRepository = booksRepository;
         }
 
         /// <summary>
@@ -34,9 +39,9 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<HumanDto>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IEnumerable<HumanDto>> GetAllHumansAsync()
+        public IEnumerable<HumanDto> GetAllHumans()
         {
-            return await humanBookService.GetAllHumansAsync();
+            return humansRepository.GetAllHumans();
         }
 
         /// <summary>
@@ -46,9 +51,11 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpGet("who-write-books")]
         [ProducesResponseType(typeof(IEnumerable<HumanDto>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IEnumerable<HumanDto>> GetHumansWhoWriteBooksAsync()
+        public IEnumerable<HumanDto> GetHumansWhoWriteBooks()
         {
-            return await humanBookService.GetHumansWhoWriteBooksAsync();
+            var humanIds = booksRepository.GetBookAuthorsIds();
+
+            return humansRepository.GetHumansByIds(humanIds);
         }
 
         /// <summary>
@@ -59,9 +66,9 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpGet("search")]
         [ProducesResponseType(typeof(IEnumerable<HumanDto>), 200)]
         [ProducesResponseType(500)]
-        public async Task<IEnumerable<HumanDto>> SearchAsync([FromQuery] string term)
+        public IEnumerable<HumanDto> Search([FromQuery] string term)
         {
-            return await humanBookService.SearchHumansByTermAsync(term);
+            return humansRepository.SearchHumansByTerm(term);
         }
 
         /// <summary>
@@ -72,9 +79,11 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(HumanDto), 200)]
         [ProducesResponseType(500)]
-        public async Task<HumanDto> AddHumanAsync([FromBody] HumanDto humanDto)
+        public HumanDto AddHuman([FromBody] HumanDto humanDto)
         {
-            return await humanBookService.AddHumanAsync(humanDto);
+            humansRepository.AddHuman(humanDto);
+
+            return humanDto;
         }
 
         /// <summary>
@@ -85,9 +94,9 @@ namespace SimbirsoftWorkshop.WebApi.Controllers
         [HttpDelete("{id:int}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
-        public async Task DeleteHumanAsync([FromRoute] int id)
+        public void DeleteHuman([FromRoute] int id)
         {
-            await humanBookService.DeleteHumanAsync(id);
+            humansRepository.DeleteHumanAsync(id);
         }
     }
 }

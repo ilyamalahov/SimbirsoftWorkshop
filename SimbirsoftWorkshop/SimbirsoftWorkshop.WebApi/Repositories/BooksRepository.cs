@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using SimbirsoftWorkshop.WebApi.Models;
 using SimbirsoftWorkshop.WebApi.Sorting;
 
@@ -18,47 +17,59 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
         /// <summary>
         /// 1.2.3 - Статичный список книг
         /// </summary>
-        private readonly IList<BookDto> booksList;
-
-        /// <summary>
-        /// Создает новый объект репозитория
-        /// </summary>
-        public BooksRepository()
+        private static readonly IList<BookDto> booksList = new List<BookDto>
         {
-            booksList = GetInitBooks();
-        }
+            new BookDto
+            {
+                Id = 1,
+                Title = "Оно",
+                Genre = "Ужасы",
+                Author = "Стивен Кинг",
+                AuthorId = 1
+            },
+            new BookDto
+            {
+                Id = 2,
+                Title = "Сияние",
+                Genre = "Триллер",
+                Author = "Стивен Кинг",
+                AuthorId = 1
+            },
+            new BookDto
+            {
+                Id = 4,
+                Title = "Дюна",
+                Genre = "Фантастика",
+                Author = "Фрэнк Герберт",
+                AuthorId = 2
+            }
+        };
 
         /// <inheritdoc/>
-        public Task<IEnumerable<BookDto>> GetAllBooksAsync(GetAllBooksModel model)
+        public IEnumerable<BookDto> GetAllBooks(GetAllBooksModel model)
         {
             if (model is null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var allBooks = SortingHelper.SortBooks(booksList, model.Sortings);
-
-            return Task.FromResult(allBooks);
+            return SortingHelper.SortBooks(booksList, model.Sortings);
         }
 
         /// <inheritdoc/>
-        public Task<IEnumerable<BookDto>> GetBooksByAuthorId(int authorId)
+        public IEnumerable<BookDto> GetBooksByAuthorId(int authorId)
         {
-            var booksByAuthorId = booksList.Where(b => b.AuthorId == authorId);
-
-            return Task.FromResult(booksByAuthorId);
+            return booksList.Where(b => b.AuthorId == authorId);
         }
 
         /// <inheritdoc/>
-        public Task<IEnumerable<int>> GetBookAuthorsIdsAsync()
+        public IEnumerable<int> GetBookAuthorsIds()
         {
-            var booksAuthorsIds = booksList.Select(b => b.AuthorId).Distinct();
-
-            return Task.FromResult(booksAuthorsIds);
+            return booksList.Select(b => b.AuthorId).Distinct();
         }
 
         /// <inheritdoc/>
-        public Task<bool> AddBookAsync(BookDto book)
+        public bool AddBook(BookDto book)
         {
             if (book is null)
             {
@@ -67,34 +78,23 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
 
             if (BookExistsByTitleAndAuthor(book.Title, book.Author))
             {
-                return Task.FromResult(false);
+                return false;
             }
 
             book.Id = GenerateIdentifier();
 
             booksList.Add(book);
 
-            return Task.FromResult(true);
+            return true;
         }
 
         /// <inheritdoc/>
-        public Task<bool> DeleteBookAsync(int id)
+        public bool DeleteBook(int id)
         {
             var bookForDelete = GetBookById(id);
 
-            var deleteResult = booksList.Remove(bookForDelete);
-
-            return Task.FromResult(deleteResult);
+            return booksList.Remove(bookForDelete);
         }
-
-        protected IList<BookDto> GetInitBooks()
-            => new List<BookDto>
-                {
-                    new BookDto{ Id = 1, Title = "Оно", Genre = "Ужасы", Author = "Стивен Кинг", AuthorId = 1 },
-                    new BookDto{ Id = 2, Title = "Сияние", Genre = "Триллер", Author = "Стивен Кинг", AuthorId = 1 },
-                    new BookDto{ Id = 3, Title = "Зеленая миля", Genre = "Триллер", Author = "Стивен Кинг", AuthorId = 1 },
-                    new BookDto{ Id = 4, Title = "Дюна", Genre = "Фантастика", Author = "Фрэнк Герберт", AuthorId = 2 }
-                };
 
         /// <summary>
         /// Получает книгу по идентификатору

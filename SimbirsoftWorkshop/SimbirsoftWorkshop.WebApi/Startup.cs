@@ -10,7 +10,6 @@ using Microsoft.OpenApi.Models;
 using SimbirsoftWorkshop.WebApi.BasicAuthorization;
 using SimbirsoftWorkshop.WebApi.Repositories;
 using SimbirsoftWorkshop.WebApi.RequestResponseLogging;
-using SimbirsoftWorkshop.WebApi.Services;
 
 namespace SimbirsoftWorkshop.WebApi
 {
@@ -39,11 +38,9 @@ namespace SimbirsoftWorkshop.WebApi
         /// <param name="services">Контейнер зависимостей (сервисов)</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IHumansRepository, HumansRepository>();
-            services.AddSingleton<IBooksRepository, BooksRepository>();
-            services.AddSingleton<ILibraryCardsRepository, LibraryCardsRepository>();
-
-            services.AddTransient<IBookLibraryService, BookLibraryService>();
+            services.AddTransient<IHumansRepository, HumansRepository>();
+            services.AddTransient<IBooksRepository, BooksRepository>();
+            services.AddTransient<ILibraryCardsRepository, LibraryCardsRepository>();
 
             services.AddSwaggerGen(options =>
             {
@@ -85,7 +82,7 @@ namespace SimbirsoftWorkshop.WebApi
 
             app.UseRouting();
 
-            //app.UseBasicAuthorization();
+            app.UseBasicAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -17,63 +17,67 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
         /// <summary>
         /// 1.2.3 - Статичный список людей
         /// </summary>
-        private readonly IList<HumanDto> humansList;
-
-        /// <summary>
-        /// Создает новый объект репозитория
-        /// </summary>
-        public HumansRepository()
+        private static readonly IList<HumanDto> humansList = new List<HumanDto>
         {
-            humansList = GetInitHumans();
-        }
-
-        private IList<HumanDto> GetInitHumans()
-            => new List<HumanDto>
-                {
-                    new HumanDto { Id = 1, Name = "Зайцева", Surname = "Эмилия", Patronymic = "Романовна", Birthday = new DateTime(1978, 01, 29) },
-                    new HumanDto { Id = 2, Name = "Комарова", Surname = "Светлана", Patronymic = "Захаровна", Birthday = new DateTime(1992, 05, 17) },
-                    new HumanDto { Id = 3, Name = "Захаров", Surname = "Максим", Patronymic = "Константинович", Birthday = new DateTime(1985, 12, 04) }
-                };
+            new HumanDto 
+            { 
+                Id = 1, 
+                Name = "Зайцева", 
+                Surname = "Эмилия", 
+                Patronymic = "Романовна", 
+                Birthday = new DateTime(1978, 01, 29) 
+            },
+            new HumanDto 
+            { 
+                Id = 2, 
+                Name = "Комарова", 
+                Surname = "Светлана", 
+                Patronymic = "Захаровна", 
+                Birthday = new DateTime(1992, 05, 17) 
+            },
+            new HumanDto 
+            { 
+                Id = 3, 
+                Name = "Захаров", 
+                Surname = "Максим", 
+                Patronymic = "Константинович", 
+                Birthday = new DateTime(1985, 12, 04) 
+            }
+        };
 
         /// <inheritdoc/>
-        public Task<IEnumerable<HumanDto>> GetAllHumansAsync()
+        public IEnumerable<HumanDto> GetAllHumans()
         {
-            var allHumans = humansList.AsEnumerable();
-
-            return Task.FromResult(allHumans);
+            return humansList;
         }
 
         /// <inheritdoc/>
-        public Task<IEnumerable<HumanDto>> GetHumansByIdsAsync(IEnumerable<int> ids)
+        public IEnumerable<HumanDto> GetHumansByIds(IEnumerable<int> ids)
         {
             if (ids is null)
             {
                 throw new ArgumentNullException(nameof(ids));
             }
 
-            var bookAuthorsByIds = humansList.Where(ba => ids.Contains(ba.Id));
-
-            return Task.FromResult(bookAuthorsByIds);
+            return humansList.Where(ba => ids.Contains(ba.Id));
         }
 
         /// <inheritdoc/>
-        public Task<IEnumerable<HumanDto>> SearchHumansByTermAsync(string term)
+        public IEnumerable<HumanDto> SearchHumansByTerm(string term)
         {
             if (string.IsNullOrEmpty(term))
             {
                 throw new ArgumentException($"\"{nameof(term)}\" не может быть неопределенным или пустым.", nameof(term));
             }
 
-            var foundHumans = humansList.Where(h =>
+            return humansList.Where(h =>
                 h.Name.Contains(term, StringComparison.CurrentCultureIgnoreCase) ||
                 h.Surname.Contains(term, StringComparison.CurrentCultureIgnoreCase) ||
                 h.Patronymic.Contains(term, StringComparison.CurrentCultureIgnoreCase));
-
-            return Task.FromResult(foundHumans);
         }
 
         /// <inheritdoc/>
-        public Task<bool> AddHumanAsync(HumanDto human)
+        public bool AddHuman(HumanDto human)
         {
             if (human is null)
             {
@@ -82,24 +86,22 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
 
             if (HumanExistsByNameSet(human.Name, human.Surname, human.Patronymic))
             {
-                return Task.FromResult(false);
+                return false;
             }
 
             human.Id = GenerateIdentifier();
 
             humansList.Add(human);
 
-            return Task.FromResult(true);
+            return true;
         }
 
         /// <inheritdoc/>
-        public Task<bool> DeleteHumanAsync(int id)
+        public bool DeleteHumanAsync(int id)
         {
             var humanForDelete = GetHumanById(id);
 
-            var deleteResult = humansList.Remove(humanForDelete);
-
-            return Task.FromResult(deleteResult);
+            return humansList.Remove(humanForDelete);
         }
 
         /// <summary>

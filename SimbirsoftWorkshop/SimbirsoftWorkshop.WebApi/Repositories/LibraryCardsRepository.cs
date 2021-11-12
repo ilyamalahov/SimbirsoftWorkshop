@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using SimbirsoftWorkshop.WebApi.Models;
 
 namespace SimbirsoftWorkshop.WebApi.Repositories
@@ -17,29 +15,21 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
         /// <summary>
         /// 2.1.3 - Статичный список карточек библиотеки
         /// </summary>
-        private readonly IList<LibraryCardDto> libraryCardsList;
-
-        /// <summary>
-        /// Создает новый объект репозитория
-        /// </summary>
-        public LibraryCardsRepository()
-        {
-            libraryCardsList = new List<LibraryCardDto>();
-        }
+        private static readonly IList<LibraryCardDto> libraryCardsList = new List<LibraryCardDto>();
 
         /// <inheritdoc/>
-        public Task<bool> AddLibraryCardAsync(LibraryCardDto libraryCard)
+        public bool AddLibraryCard(LibraryCardDto libraryCard)
         {
-            if(GetLibraryCardExistsById(libraryCard.Id))
+            if (GetLibraryCardExistsById(libraryCard.Id))
             {
-                return Task.FromResult(false);
+                return false;
             }
 
             libraryCard.Id = GenerateIdentifier();
 
             libraryCardsList.Add(libraryCard);
 
-            return Task.FromResult(true);
+            return true;
         }
 
         /// <summary>
@@ -51,8 +41,8 @@ namespace SimbirsoftWorkshop.WebApi.Repositories
             => libraryCardsList.Any(lc => lc.Id == id);
 
         private int GenerateIdentifier()
-            => libraryCardsList.Any() ? 
-            libraryCardsList.Max(lc => lc.Id) + identifierIncrementStep : 
+            => libraryCardsList.Any() ?
+            libraryCardsList.Max(lc => lc.Id) + identifierIncrementStep :
             identifierInitialValue;
     }
 }
