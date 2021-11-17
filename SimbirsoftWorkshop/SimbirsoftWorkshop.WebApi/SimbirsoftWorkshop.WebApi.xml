@@ -204,6 +204,17 @@
             <param name="libraryCardDto">Карточка с данными о получении книги</param>
             <returns>Результат получения книги</returns>
         </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext">
+            <summary>
+            1. Контекст базы данных для работы с библиотекой книг
+            </summary>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            Создает новый объект контекста базы данных
+            </summary>
+            <param name="options">Настройки, используемые контекстом базы данных</param>
+        </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Extensions.EnumerableExtensions">
             <summary>
             Метод расширения объектов IEnumerable

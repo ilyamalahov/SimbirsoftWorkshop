@@ -3,11 +3,13 @@ using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using SimbirsoftWorkshop.WebApi.BasicAuthorization;
+using SimbirsoftWorkshop.WebApi.Data;
 using SimbirsoftWorkshop.WebApi.Repositories;
 using SimbirsoftWorkshop.WebApi.RequestResponseLogging;
 
@@ -38,6 +40,10 @@ namespace SimbirsoftWorkshop.WebApi
         /// <param name="services">Контейнер зависимостей (сервисов)</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = "Server=localhost;Port=3306;Database=simbirsoft_book_library;Uid=root;Pwd=Ewqdsacxz123;";
+
+            services.AddDbContext<BookLibraryContext>(options => options.UseMySQL(connectionString));
+
             services.AddTransient<IHumansRepository, HumansRepository>();
             services.AddTransient<IBooksRepository, BooksRepository>();
             services.AddTransient<ILibraryCardsRepository, LibraryCardsRepository>();
