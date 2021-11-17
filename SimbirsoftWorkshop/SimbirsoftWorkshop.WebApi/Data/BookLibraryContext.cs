@@ -35,5 +35,145 @@ namespace SimbirsoftWorkshop.WebApi.Data
         /// <param name="options">Настройки, используемые контекстом базы данных</param>
         public BookLibraryContext(DbContextOptions options)
             : base(options) { }
+
+        /// <summary>
+        /// 3. Настраивает сущности базы данных
+        /// </summary>
+        /// <param name="modelBuilder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            ConfigureGenres(modelBuilder);
+            ConfigureAuthors(modelBuilder);
+            ConfigureBooks(modelBuilder);
+            ConfigurePeople(modelBuilder);
+            ConfigureLibraryCards(modelBuilder);
+        }
+
+        #region Configure entities
+
+        #endregion
+
+        /// <summary>
+        /// 3. Настраивает сущность жанров книг
+        /// </summary>
+        /// <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        private void ConfigureGenres(ModelBuilder builder)
+        {
+            var entity = builder.Entity<Genre>();
+
+            entity.HasKey(g => g.Id);
+
+            entity.Property(g => g.Name)
+                .IsRequired()
+                .HasMaxLength(64);
+
+            entity.HasMany(g => g.Books)
+                .WithMany(b => b.Genres);
+
+            entity.HasIndex(g => g.Name)
+                .IsUnique();
+        }
+
+        /// <summary>
+        /// 3. Настраивает сущность авторов книг
+        /// </summary>
+        /// <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        private void ConfigureAuthors(ModelBuilder builder)
+        {
+            var entity = builder.Entity<Author>();
+
+            entity.HasKey(a => a.Id);
+
+            entity.Property(a => a.FirstName)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            entity.Property(a => a.LastName)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            entity.Property(a => a.MiddleName)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            entity.HasIndex(a => new { a.FirstName, a.LastName, a.MiddleName })
+                .IsUnique();
+        }
+
+        /// <summary>
+        /// 3. Настраивает сущность книг
+        /// </summary>
+        /// <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        private void ConfigureBooks(ModelBuilder builder)
+        {
+            var entity = builder.Entity<Book>();
+
+            entity.HasKey(b => b.Id);
+
+            entity.Property(b => b.Name)
+                .IsRequired()
+                .HasMaxLength(256);
+
+            entity.HasOne(b => b.Author)
+                .WithMany(a => a.Books)
+                .HasForeignKey(b => b.AuthorId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(b => b.Name)
+                .IsUnique();
+        }
+
+        /// <summary>
+        /// 3. Настраивает сущность пользователей
+        /// </summary>
+        /// <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        private void ConfigurePeople(ModelBuilder builder)
+        {
+            var entity = builder.Entity<Person>();
+
+            entity.HasKey(p => p.Id);
+
+            entity.Property(p => p.FirstName)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            entity.Property(p => p.LastName)
+                .IsRequired()
+                .HasMaxLength(128);
+
+            entity.Property(p => p.MiddleName)
+                .HasMaxLength(128);
+
+            entity.HasIndex(p => new { p.FirstName, p.LastName, p.MiddleName })
+                .IsUnique();
+        }
+
+        /// <summary>
+        /// 3. Настраивает сущность учетных карточек
+        /// </summary>
+        /// <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        private void ConfigureLibraryCards(ModelBuilder builder)
+        {
+            var entity = builder.Entity<LibraryCard>();
+
+            entity.HasKey(p => new { p.BookId, p.PersonId });
+
+            entity.Property(lc => lc.BookTakingDate)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.HasOne(lc => lc.Book)
+                .WithMany(b => b.LibraryCards)
+                .HasForeignKey(lc => lc.BookId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
+            entity.HasOne(lc => lc.Person)
+                .WithMany(p => p.LibraryCards)
+                .HasForeignKey(lc => lc.PersonId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+        }
     }
 }
