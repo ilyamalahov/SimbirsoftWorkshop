@@ -240,6 +240,42 @@
             </summary>
             <param name="options">Настройки, используемые контекстом базы данных</param>
         </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущности базы данных
+            </summary>
+            <param name="modelBuilder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigureGenres(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность жанров книг
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigureAuthors(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность авторов книг
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigureBooks(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность книг
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigurePeople(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность пользователей
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigureLibraryCards(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность учетных карточек
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Entities.Author">
             <summary>
             2. Автор книги

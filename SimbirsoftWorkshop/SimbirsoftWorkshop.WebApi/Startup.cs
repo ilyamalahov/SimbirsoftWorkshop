@@ -40,7 +40,8 @@ namespace SimbirsoftWorkshop.WebApi
         /// <param name="services">Контейнер зависимостей (сервисов)</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = "Server=localhost;Port=3306;Database=simbirsoft_book_library;Uid=root;Pwd=Ewqdsacxz123;";
+            // 4. Получение строки подключения к базе данных из конфигурации
+            var connectionString = Configuration.GetConnectionString("BookLibraryConnection");
 
             services.AddDbContext<BookLibraryContext>(options => options.UseMySQL(connectionString));
 
