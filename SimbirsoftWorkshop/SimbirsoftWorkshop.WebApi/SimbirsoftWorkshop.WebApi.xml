@@ -209,11 +209,186 @@
             1. Контекст базы данных для работы с библиотекой книг
             </summary>
         </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.Genres">
+            <summary>
+            2. Набор сущностей жанров книг
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.Authors">
+            <summary>
+            2. Набор сущностей авторов книг
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.Books">
+            <summary>
+            2. Набор сущностей книг
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.People">
+            <summary>
+            2. Набор сущностей пользователей
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.LibraryCards">
+            <summary>
+            2. Набор сущностей учетных карточек
+            </summary>
+        </member>
         <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
             <summary>
             Создает новый объект контекста базы данных
             </summary>
             <param name="options">Настройки, используемые контекстом базы данных</param>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Author">
+            <summary>
+            2. Автор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.FirstName">
+            <summary>
+            Имя автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.LastName">
+            <summary>
+            Фамилия автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.MiddleName">
+            <summary>
+            Отчество автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.Books">
+            <summary>
+            Книги автора
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Book">
+            <summary>
+            2. Книга
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Name">
+            <summary>
+            Название книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.AuthorId">
+            <summary>
+            Идентификатор автора книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Genres">
+            <summary>
+            Жанры книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Author">
+            <summary>
+            Автор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.LibraryCards">
+            <summary>
+            Учетные карточки книги
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Genre">
+            <summary>
+            2. Жанр книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Genre.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Genre.Name">
+            <summary>
+            Название жанра
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Genre.Books">
+            <summary>
+            Книги жанра
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.LibraryCard">
+            <summary>
+            2. Учетная карточка
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.BookId">
+            <summary>
+            Уникальный идентификатор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.Book">
+            <summary>
+            Книга
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.PersonId">
+            <summary>
+            Уникальный идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.Person">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.BookTakingDate">
+            <summary>
+            Дата и время получения книги пользователем
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Person">
+            <summary>
+            2. Пользователь
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.FirstName">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.LastName">
+            <summary>
+            Фамилия пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.MiddleName">
+            <summary>
+            Отчество пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.Birthday">
+            <summary>
+            Дата рождения пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.LibraryCards">
+            <summary>
+            Учетные карточки пользователя
+            </summary>
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Extensions.EnumerableExtensions">
             <summary>

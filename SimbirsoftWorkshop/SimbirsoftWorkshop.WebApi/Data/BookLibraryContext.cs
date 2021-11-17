@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SimbirsoftWorkshop.WebApi.Entities;
 
 namespace SimbirsoftWorkshop.WebApi.Data
 {
@@ -11,6 +8,27 @@ namespace SimbirsoftWorkshop.WebApi.Data
     /// </summary>
     public sealed class BookLibraryContext : DbContext
     {
+        /// <summary>
+        /// 2. Набор сущностей жанров книг
+        /// </summary>
+        public DbSet<Genre> Genres { get; set; }
+        /// <summary>
+        /// 2. Набор сущностей авторов книг
+        /// </summary>
+        public DbSet<Author> Authors { get; set; }
+        /// <summary>
+        /// 2. Набор сущностей книг
+        /// </summary>
+        public DbSet<Book> Books { get; set; }
+        /// <summary>
+        /// 2. Набор сущностей пользователей
+        /// </summary>
+        public DbSet<Person> People { get; set; }
+        /// <summary>
+        /// 2. Набор сущностей учетных карточек
+        /// </summary>
+        public DbSet<LibraryCard> LibraryCards { get; set; }
+
         /// <summary>
         /// Создает новый объект контекста базы данных
         /// </summary>
