@@ -26,6 +26,6 @@ namespace SimbirsoftWorkshop.WebApi.Entities
         /// <summary>
         /// Дата и время получения книги пользователем
         /// </summary>
-        public DateTime BookTakingDate { get; set; }
+        public DateTimeOffset BookReceivingDate { get; set; }
     }
 }

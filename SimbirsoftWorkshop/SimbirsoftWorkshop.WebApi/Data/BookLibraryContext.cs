@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using SimbirsoftWorkshop.WebApi.Entities;
 
 namespace SimbirsoftWorkshop.WebApi.Data
@@ -51,8 +53,6 @@ namespace SimbirsoftWorkshop.WebApi.Data
 
         #region Configure entities
 
-        #endregion
-
         /// <summary>
         /// 3. Настраивает сущность жанров книг
         /// </summary>
@@ -68,10 +68,27 @@ namespace SimbirsoftWorkshop.WebApi.Data
                 .HasMaxLength(64);
 
             entity.HasMany(g => g.Books)
-                .WithMany(b => b.Genres);
+                .WithMany(b => b.Genres)
+                .UsingEntity<Dictionary<string, object>>(
+                    "BookGenres",
+                    j => j
+                        .HasOne<Book>()
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .HasConstraintName("FK_BookGenres_Books_BookId")
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                        .HasOne<Genre>()
+                        .WithMany()
+                        .HasForeignKey("GenreId")
+                        .HasConstraintName("FK_BookGenres_Genres_GenreId")
+                        .OnDelete(DeleteBehavior.Cascade), 
+                    j => j.HasData(DataSeedInitializer.BookGenres));
 
             entity.HasIndex(g => g.Name)
                 .IsUnique();
+
+            entity.HasData(DataSeedInitializer.Genres);
         }
 
         /// <summary>
@@ -98,6 +115,8 @@ namespace SimbirsoftWorkshop.WebApi.Data
 
             entity.HasIndex(a => new { a.FirstName, a.LastName, a.MiddleName })
                 .IsUnique();
+
+            entity.HasData(DataSeedInitializer.Authors);
         }
 
         /// <summary>
@@ -122,6 +141,8 @@ namespace SimbirsoftWorkshop.WebApi.Data
 
             entity.HasIndex(b => b.Name)
                 .IsUnique();
+
+            entity.HasData(DataSeedInitializer.Books);
         }
 
         /// <summary>
@@ -147,6 +168,8 @@ namespace SimbirsoftWorkshop.WebApi.Data
 
             entity.HasIndex(p => new { p.FirstName, p.LastName, p.MiddleName })
                 .IsUnique();
+
+            entity.HasData(DataSeedInitializer.People);
         }
 
         /// <summary>
@@ -159,7 +182,7 @@ namespace SimbirsoftWorkshop.WebApi.Data
 
             entity.HasKey(p => new { p.BookId, p.PersonId });
 
-            entity.Property(lc => lc.BookTakingDate)
+            entity.Property(lc => lc.BookReceivingDate)
                 .IsRequired()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
@@ -167,13 +190,17 @@ namespace SimbirsoftWorkshop.WebApi.Data
                 .WithMany(b => b.LibraryCards)
                 .HasForeignKey(lc => lc.BookId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasOne(lc => lc.Person)
                 .WithMany(p => p.LibraryCards)
                 .HasForeignKey(lc => lc.PersonId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasData(DataSeedInitializer.LibraryCards);
         }
+
+        #endregion
     }
 }

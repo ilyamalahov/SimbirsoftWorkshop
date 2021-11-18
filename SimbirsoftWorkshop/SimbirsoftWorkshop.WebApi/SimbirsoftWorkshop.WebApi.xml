@@ -386,7 +386,7 @@
             Пользователь
             </summary>
         </member>
-        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.BookTakingDate">
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.BookReceivingDate">
             <summary>
             Дата и время получения книги пользователем
             </summary>
