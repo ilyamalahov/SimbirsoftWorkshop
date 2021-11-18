@@ -45,9 +45,10 @@ namespace SimbirsoftWorkshop.WebApi
 
             services.AddDbContext<BookLibraryContext>(options => options.UseMySQL(connectionString));
 
-            services.AddTransient<IHumansRepository, HumansRepository>();
             services.AddTransient<IBooksRepository, BooksRepository>();
-            services.AddTransient<ILibraryCardsRepository, LibraryCardsRepository>();
+            services.AddTransient<IAuthorsRepository, AuthorsRepository>();
+            services.AddTransient<IGenresRepository, GenresRepository>();
+            services.AddTransient<IPeopleRepository, PeopleRepository>();
 
             services.AddSwaggerGen(options =>
             {
