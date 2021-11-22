@@ -48,7 +48,6 @@ namespace SimbirsoftWorkshop.WebApi.Data
             ConfigureAuthors(modelBuilder);
             ConfigureBooks(modelBuilder);
             ConfigurePeople(modelBuilder);
-            ConfigureLibraryCards(modelBuilder);
         }
 
         #region Configure entities
@@ -166,39 +165,40 @@ namespace SimbirsoftWorkshop.WebApi.Data
             entity.Property(p => p.MiddleName)
                 .HasMaxLength(128);
 
-            entity.HasIndex(p => new { p.FirstName, p.LastName, p.MiddleName })
+            entity.HasMany(p => p.Books)
+                .WithMany(b => b.People)
+                .UsingEntity<LibraryCard>(
+                    j => j
+                        .HasOne(lc => lc.Book)
+                        .WithMany(b => b.LibraryCards)
+                        .HasForeignKey(lc => lc.BookId)
+                        .IsRequired()
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j => j
+                        .HasOne(lc => lc.Person)
+                        .WithMany(p => p.LibraryCards)
+                        .HasForeignKey(lc => lc.PersonId)
+                        .IsRequired()
+                        .OnDelete(DeleteBehavior.Cascade),
+                    j => 
+                    {
+                        j.HasKey(p => new { p.BookId, p.PersonId });
+
+                        j.Property(lc => lc.BookReceivingDate)
+                            .IsRequired()
+                            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                            .ValueGeneratedOnAdd();
+
+                        j.HasIndex(lc => lc.BookId)
+                            .IsUnique();
+                        
+                        j.HasData(DataSeedInitializer.LibraryCards);
+                    });
+
+            entity.HasIndex(p => new { p.FirstName, p.LastName, p.MiddleName, p.Birthday })
                 .IsUnique();
 
             entity.HasData(DataSeedInitializer.People);
-        }
-
-        /// <summary>
-        /// 3. Настраивает сущность учетных карточек
-        /// </summary>
-        /// <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
-        private void ConfigureLibraryCards(ModelBuilder builder)
-        {
-            var entity = builder.Entity<LibraryCard>();
-
-            entity.HasKey(p => new { p.BookId, p.PersonId });
-
-            entity.Property(lc => lc.BookReceivingDate)
-                .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-            entity.HasOne(lc => lc.Book)
-                .WithMany(b => b.LibraryCards)
-                .HasForeignKey(lc => lc.BookId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasOne(lc => lc.Person)
-                .WithMany(p => p.LibraryCards)
-                .HasForeignKey(lc => lc.PersonId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
-
-            entity.HasData(DataSeedInitializer.LibraryCards);
         }
 
         #endregion

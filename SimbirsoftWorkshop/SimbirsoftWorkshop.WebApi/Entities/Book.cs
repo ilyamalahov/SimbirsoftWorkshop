@@ -30,8 +30,12 @@ namespace SimbirsoftWorkshop.WebApi.Entities
         /// </summary>
         public Author Author { get; set; }
         /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<Person> People { get; set; }
+        /// <summary>
         /// Учетные карточки книги
         /// </summary>
-        public ICollection<LibraryCard> LibraryCards { get; set; }
+        public List<LibraryCard> LibraryCards { get; set; }
     }
 }

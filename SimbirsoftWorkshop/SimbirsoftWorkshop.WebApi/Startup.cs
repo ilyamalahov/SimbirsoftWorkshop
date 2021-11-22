@@ -8,10 +8,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SimbirsoftWorkshop.WebApi.AutoMapper;
 using SimbirsoftWorkshop.WebApi.BasicAuthorization;
 using SimbirsoftWorkshop.WebApi.Data;
 using SimbirsoftWorkshop.WebApi.Repositories;
 using SimbirsoftWorkshop.WebApi.RequestResponseLogging;
+using SimbirsoftWorkshop.WebApi.Services;
 
 namespace SimbirsoftWorkshop.WebApi
 {
@@ -49,7 +51,18 @@ namespace SimbirsoftWorkshop.WebApi
             services.AddTransient<IAuthorsRepository, AuthorsRepository>();
             services.AddTransient<IGenresRepository, GenresRepository>();
             services.AddTransient<IPeopleRepository, PeopleRepository>();
+            services.AddTransient<ILibraryCardsRepository, LibraryCardsRepository>();
 
+            services.AddTransient<IPeopleService, PeopleService>();
+
+            services.AddAutoMapper(c =>
+            {
+                c.AddProfile<BookProfile>();
+                c.AddProfile<AuthorProfile>();
+                c.AddProfile<GenreProfile>();
+                c.AddProfile<PersonProfile>();
+            });
+            
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo

@@ -8,7 +8,13 @@ namespace SimbirsoftWorkshop.WebApi.AutoMapper
     {
         public BookProfile()
         {
-            CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<Book, PersonBookDto>()
+                .ForMember(pb => pb.Id, opt => opt.MapFrom(b => b.Id))
+                .ForMember(pb => pb.Name, opt => opt.MapFrom(b => b.Name));
+
+            CreateMap<Book, ReceivingBookDto>()
+                .ForMember(pb => pb.Id, opt => opt.MapFrom(b => b.Id))
+                .ForMember(pb => pb.Name, opt => opt.MapFrom(b => b.Name));
         }
     }
 }

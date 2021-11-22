@@ -29,8 +29,12 @@ namespace SimbirsoftWorkshop.WebApi.Entities
         /// </summary>
         public DateTime? Birthday { get; set; }
         /// <summary>
+        /// 
+        /// </summary>
+        public ICollection<Book> Books { get; set; }
+        /// <summary>
         /// Учетные карточки пользователя
         /// </summary>
-        public ICollection<LibraryCard> LibraryCards { get; set; }
+        public List<LibraryCard> LibraryCards { get; set; }
     }
 }
