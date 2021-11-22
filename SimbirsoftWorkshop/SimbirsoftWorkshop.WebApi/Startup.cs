@@ -3,13 +3,17 @@ using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using SimbirsoftWorkshop.WebApi.AutoMapper;
 using SimbirsoftWorkshop.WebApi.BasicAuthorization;
+using SimbirsoftWorkshop.WebApi.Data;
 using SimbirsoftWorkshop.WebApi.Repositories;
 using SimbirsoftWorkshop.WebApi.RequestResponseLogging;
+using SimbirsoftWorkshop.WebApi.Services;
 
 namespace SimbirsoftWorkshop.WebApi
 {
@@ -38,10 +42,27 @@ namespace SimbirsoftWorkshop.WebApi
         /// <param name="services">Контейнер зависимостей (сервисов)</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IHumansRepository, HumansRepository>();
+            // 4. Получение строки подключения к базе данных из конфигурации
+            var connectionString = Configuration.GetConnectionString("BookLibraryConnection");
+
+            services.AddDbContext<BookLibraryContext>(options => options.UseMySQL(connectionString));
+
             services.AddTransient<IBooksRepository, BooksRepository>();
+            services.AddTransient<IAuthorsRepository, AuthorsRepository>();
+            services.AddTransient<IGenresRepository, GenresRepository>();
+            services.AddTransient<IPeopleRepository, PeopleRepository>();
             services.AddTransient<ILibraryCardsRepository, LibraryCardsRepository>();
 
+            services.AddTransient<IPeopleService, PeopleService>();
+
+            services.AddAutoMapper(c =>
+            {
+                c.AddProfile<BookProfile>();
+                c.AddProfile<AuthorProfile>();
+                c.AddProfile<GenreProfile>();
+                c.AddProfile<PersonProfile>();
+            });
+            
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo

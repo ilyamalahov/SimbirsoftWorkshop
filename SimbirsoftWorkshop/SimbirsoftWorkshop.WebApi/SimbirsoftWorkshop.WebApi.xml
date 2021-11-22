@@ -84,125 +84,286 @@
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Controllers.BooksController">
             <summary>
-            1.4 - API-контроллер книг
+            API-контроллер книг
             </summary>
         </member>
-        <member name="F:SimbirsoftWorkshop.WebApi.Controllers.BooksController.booksRepository">
+        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.PeopleController.AddPersonAsync(SimbirsoftWorkshop.WebApi.Models.PersonDto)">
             <summary>
-            Репозиторий для работы с книгами
+            7.1.1. Добавляет нового пользователя
+            </summary>
+            <param name="personDto">Новый пользователь</param>
+            <returns>Результат добавления нового пользователя</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.PeopleController.UpdatePersonAsync(System.Int32,SimbirsoftWorkshop.WebApi.Models.PersonDto)">
+            <summary>
+            7.1.2. Изменяет информацию о пользователе по идентификатору
+            </summary>
+            <param name="id">Уникальный идентификатор пользователя</param>
+            <param name="personDto">Пользователь с измененными данными</param>
+            <returns>Результат изменения информации о пользователе</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.PeopleController.DeletePersonAsync(System.Int32)">
+            <summary>
+            7.1.3. Удаляет пользователя по идентификатору
+            </summary>
+            <param name="id">Уникальный идентификатор пользователя</param>
+            <returns>Результат удаления пользователя</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.PeopleController.DeletePeopleByFullName(SimbirsoftWorkshop.WebApi.Models.DeletePeopleByFullNameModel)">
+            <summary>
+            7.1.4. Удаляет пользователей по найденному ФИО
+            </summary>
+            <param name="model">Модель, содержащая ФИО пользователя</param>
+            <returns>Результат удаления пользователей</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.PeopleController.GetPersonBooks(System.Int32)">
+            <summary>
+            7.1.5. Получает список всех взятых пользователем книг
+            </summary>
+            <param name="personId">Пользователь, который взял книгу</param>
+            <returns>Список книг, взятых пользователем</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.PeopleController.PersonReceivesBook(System.Int32,System.Int32)">
+            <summary>
+            7.1.6. Получает книгу для прочтения пользователем
+            </summary>
+            <param name="personId">Пользователь, который получает книгу для прочтения</param>
+            <param name="bookId">Книга, которую пользователь получает для прочтения</param>
+            <returns>Пользователь со списком взятых для прочтения книг</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.PeopleController.PersonReturnsBook(System.Int32,System.Int32)">
+            <summary>
+            7.1.7. Возвращает книгу, взятую для прочтения пользователем
+            </summary>
+            <param name="personId">Пользователь, который возвращает книгу</param>
+            <param name="bookId">Книга, которую пользователь возвращает</param>
+            <returns>Пользователь со списком взятых для прочтения книг</returns>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext">
+            <summary>
+            1. Контекст базы данных для работы с библиотекой книг
             </summary>
         </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.BooksController.#ctor(SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository)">
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.Genres">
             <summary>
-            Создает новый объект контроллера
-            </summary>
-            <param name="booksRepository">Репозиторий для работы с книгами</param>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.BooksController.GetAllBooks(SimbirsoftWorkshop.WebApi.Models.GetAllBooksModel)">
-            <summary>
-            1.4.1.1 - Получает список всех книг
-            </summary>
-            <param name="model">Модель, включащая в себя параметры строки запроса</param>
-            <returns>Список книг</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.BooksController.GetBooksByAuthorId(System.Int32)">
-            <summary>
-            1.4.1.2 - Получает список книг по идентификатору автора
-            </summary>
-            <param name="authorId">Идентификатор автора книги</param>
-            <returns>Список книг</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.BooksController.AddBook(SimbirsoftWorkshop.WebApi.Models.BookDto)">
-            <summary>
-            1.4.2 - Добавляет книгу
-            </summary>
-            <param name="bookDto">Книга для добавления</param>
-            <returns>Добавленная книга</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.BooksController.DeleteBook(System.Int32)">
-            <summary>
-            1.4.3 - Удаляет книгу по идентификатору
-            </summary>
-            <param name="id">Идентификатор книги</param>
-            <returns>Результат удаления</returns>
-        </member>
-        <member name="T:SimbirsoftWorkshop.WebApi.Controllers.HumansController">
-            <summary>
-            1.3 - API-контроллер по работе с людьми
+            2. Набор сущностей жанров книг
             </summary>
         </member>
-        <member name="F:SimbirsoftWorkshop.WebApi.Controllers.HumansController.humansRepository">
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.Authors">
             <summary>
-            Репозиторий для работы с людьми
+            2. Набор сущностей авторов книг
             </summary>
         </member>
-        <member name="F:SimbirsoftWorkshop.WebApi.Controllers.HumansController.booksRepository">
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.Books">
             <summary>
-            Репозиторий для работы с книгами
+            2. Набор сущностей книг
             </summary>
         </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.HumansController.#ctor(SimbirsoftWorkshop.WebApi.Repositories.IHumansRepository,SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository)">
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.People">
             <summary>
-            Создает новый контроллер
-            </summary>
-            <param name="humansRepository">Репозиторий для работы с людьми</param>
-            <param name="booksRepository">Репозиторий для работы с книгами</param>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.HumansController.GetAllHumans">
-            <summary>
-            1.3.1.1 - Получает список всех людей
-            </summary>
-            <returns>Список людей</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.HumansController.GetHumansWhoWriteBooks">
-            <summary>
-            1.3.1.2 - Получает список людей, которые пишут книги
-            </summary>
-            <returns>Список людей</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.HumansController.Search(System.String)">
-            <summary>
-            1.3.1.3 - Производит поиск людей по имени, фамилии или отчеству
-            </summary>
-            <param name="term"></param>
-            <returns>Список людей</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.HumansController.AddHuman(SimbirsoftWorkshop.WebApi.Models.HumanDto)">
-            <summary>
-            1.3.2 Добавляет нового человека
-            </summary>
-            <param name="humanDto">Новый человек</param>
-            <returns>Добавленный человек</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.HumansController.DeleteHuman(System.Int32)">
-            <summary>
-            1.3.3 Удаляет человека по идентификатору
-            </summary>
-            <param name="id">Идентификатор человека</param>
-            <returns>Результат удаления</returns>
-        </member>
-        <member name="T:SimbirsoftWorkshop.WebApi.Controllers.LibraryController">
-            <summary>
-            2.1.2 - API-контроллер библиотеки
+            2. Набор сущностей пользователей
             </summary>
         </member>
-        <member name="F:SimbirsoftWorkshop.WebApi.Controllers.LibraryController.libraryCardsRepository">
+        <member name="P:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.LibraryCards">
             <summary>
-            Репозиторий по работе с карточками библиотеки
+            2. Набор сущностей учетных карточек
             </summary>
         </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.LibraryController.#ctor(SimbirsoftWorkshop.WebApi.Repositories.ILibraryCardsRepository)">
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
             <summary>
-            Создает новый объект контроллера
+            Создает новый объект контекста базы данных
             </summary>
-            <param name="libraryCardsRepository">Репозиторий по работе с карточками библиотеки</param>
+            <param name="options">Настройки, используемые контекстом базы данных</param>
         </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Controllers.LibraryController.TakeBookAsync(SimbirsoftWorkshop.WebApi.Models.LibraryCardDto)">
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <summary>
-            2.1.4 - Производит получение книги человеком
+            3. Настраивает сущности базы данных
             </summary>
-            <param name="libraryCardDto">Карточка с данными о получении книги</param>
-            <returns>Результат получения книги</returns>
+            <param name="modelBuilder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigureGenres(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность жанров книг
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigureAuthors(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность авторов книг
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigureBooks(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность книг
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Data.BookLibraryContext.ConfigurePeople(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            3. Настраивает сущность пользователей
+            </summary>
+            <param name="builder">Построитель модели, предоставляющий методы для настройки сущностей базы данных</param>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Author">
+            <summary>
+            2. Автор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.FirstName">
+            <summary>
+            Имя автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.LastName">
+            <summary>
+            Фамилия автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.MiddleName">
+            <summary>
+            Отчество автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Author.Books">
+            <summary>
+            Книги автора
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Book">
+            <summary>
+            2. Книга
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Name">
+            <summary>
+            Название книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.AuthorId">
+            <summary>
+            Идентификатор автора книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Genres">
+            <summary>
+            Жанры книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.Author">
+            <summary>
+            Автор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.People">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Book.LibraryCards">
+            <summary>
+            Учетные карточки книги
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Genre">
+            <summary>
+            2. Жанр книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Genre.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Genre.Name">
+            <summary>
+            Название жанра
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Genre.Books">
+            <summary>
+            Книги жанра
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.LibraryCard">
+            <summary>
+            2. Учетная карточка
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.BookId">
+            <summary>
+            Уникальный идентификатор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.Book">
+            <summary>
+            Книга
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.PersonId">
+            <summary>
+            Уникальный идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.Person">
+            <summary>
+            Пользователь
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.LibraryCard.BookReceivingDate">
+            <summary>
+            Дата и время получения книги пользователем
+            </summary>
+        </member>
+        <member name="T:SimbirsoftWorkshop.WebApi.Entities.Person">
+            <summary>
+            2. Пользователь
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.FirstName">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.LastName">
+            <summary>
+            Фамилия пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.MiddleName">
+            <summary>
+            Отчество пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.Birthday">
+            <summary>
+            Дата рождения пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.Books">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Entities.Person.LibraryCards">
+            <summary>
+            Учетные карточки пользователя
+            </summary>
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Extensions.EnumerableExtensions">
             <summary>
@@ -255,6 +416,81 @@
         <member name="P:SimbirsoftWorkshop.WebApi.Models.BookDto.AuthorId">
             <summary>
             Уникальный идентификатор автора книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookDto.Id">
+            <summary>
+            Идентфикатор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookDto.Name">
+            <summary>
+            Название книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookDto.Author">
+            <summary>
+            Автор книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookDto.Genres">
+            <summary>
+            Жанры книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookAuthorDto.Id">
+            <summary>
+            Идентификатор автора книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookAuthorDto.FirstName">
+            <summary>
+            Имя автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookAuthorDto.LastName">
+            <summary>
+            Фамилия автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookAuthorDto.MiddleName">
+            <summary>
+            Отчество автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookGenreDto.Id">
+            <summary>
+            Идентификатор жанра книги
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.PersonBookGenreDto.Name">
+            <summary>
+            Название жанра
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.ReceivingBookPersonDto.Id">
+            <summary>
+            Идентификатор пользователя
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.ReceivingBookPersonDto.FirstName">
+            <summary>
+            Имя автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.ReceivingBookPersonDto.LastName">
+            <summary>
+            Фамилия автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.ReceivingBookPersonDto.MiddleName">
+            <summary>
+            Отчество автора
+            </summary>
+        </member>
+        <member name="P:SimbirsoftWorkshop.WebApi.Models.ReceivingBookPersonDto.Books">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Models.GetAllBooksModel">
@@ -337,185 +573,28 @@
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository">
             <summary>
-            Реализация репозитория для работы с книгами в памяти
+            Реализация репозитория для работы с книгами
             </summary>
         </member>
-        <member name="F:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository.booksList">
+        <member name="T:SimbirsoftWorkshop.WebApi.Repositories.IAuthorsRepository">
             <summary>
-            1.2.3 - Статичный список книг
+            6. Репозиторий для работы с авторами книг
             </summary>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository.GetAllBooks(SimbirsoftWorkshop.WebApi.Models.GetAllBooksModel)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository.GetBooksByAuthorId(System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository.GetBookAuthorsIds">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository.AddBook(SimbirsoftWorkshop.WebApi.Models.BookDto)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository.DeleteBook(System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.BooksRepository.GetBookById(System.Int32)">
-            <summary>
-            Получает книгу по идентификатору
-            </summary>
-            <param name="id">Идентификатор книги</param>
-            <returns>Найденная книга</returns>
-        </member>
-        <member name="T:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository">
-            <summary>
-            Реализация репозитория для работы с людьми в памяти
-            </summary>
-        </member>
-        <member name="F:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.humansList">
-            <summary>
-            1.2.3 - Статичный список людей
-            </summary>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.GetAllHumans">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.GetHumansByIds(System.Collections.Generic.IEnumerable{System.Int32})">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.SearchHumansByTerm(System.String)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.AddHuman(SimbirsoftWorkshop.WebApi.Models.HumanDto)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.DeleteHumanAsync(System.Int32)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.GetHumanById(System.Int32)">
-            <summary>
-            Возвращает человека по идентификатору
-            </summary>
-            <param name="id">Идентификатор человека</param>
-            <returns>Найденный человек</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.HumansRepository.HumanExistsByNameSet(System.String,System.String,System.String)">
-            <summary>
-            Проверяет, существует человек по имени, фамилии и отчеству
-            </summary>
-            <param name="name">Имя человека</param>
-            <param name="surname">Фамилия человека</param>
-            <param name="patronymic">Отчество человека</param>
-            <returns>Результат проверки</returns>
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository">
             <summary>
-            Репозиторий для работы с книгами
+            6. Репозиторий для работы с книгами
             </summary>
         </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository.GetAllBooks(SimbirsoftWorkshop.WebApi.Models.GetAllBooksModel)">
+        <member name="T:SimbirsoftWorkshop.WebApi.Repositories.IGenresRepository">
             <summary>
-            Получает список всех книг
+            6. Репозиторий для работы с жанрами книг
             </summary>
-            <returns>Список книг</returns>
         </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository.GetBooksByAuthorId(System.Int32)">
+        <member name="T:SimbirsoftWorkshop.WebApi.Repositories.IPeopleRepository">
             <summary>
-            Получает книги по идентификатору автора
+            6. Репозиторий для работы с пользователями
             </summary>
-            <param name="authorId">Идентификатор автора книг</param>
-            <returns>Список книг</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository.GetBookAuthorsIds">
-            <summary>
-            Получает список идентификаторов авторов книг
-            </summary>
-            <returns>Список идентификаторов авторов книг</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository.AddBook(SimbirsoftWorkshop.WebApi.Models.BookDto)">
-            <summary>
-            Добавляет новую книгу
-            </summary>
-            <param name="book">Новая книга</param>
-            <returns>Результат добавления новой книги (добавлена/не добавлена)</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IBooksRepository.DeleteBook(System.Int32)">
-            <summary>
-            Удаляет книгу
-            </summary>
-            <param name="id">Идентификатор удаляемой книги</param>
-            <returns>Результат удаления книги (удалена/не удалена)</returns>
-        </member>
-        <member name="T:SimbirsoftWorkshop.WebApi.Repositories.IHumansRepository">
-            <summary>
-            Репозиторий по работе с людьми
-            </summary>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IHumansRepository.GetAllHumans">
-            <summary>
-            Получает список всех людей
-            </summary>
-            <returns>Список людей</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IHumansRepository.GetHumansByIds(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            Получает список людей по их идентификаторам
-            </summary>
-            <param name="ids">Идентификаторы людей</param>
-            <returns>Список людей</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IHumansRepository.SearchHumansByTerm(System.String)">
-            <summary>
-            Производит поиск людей по имени, фамилии или отчеству
-            </summary>
-            <param name="term">Искомое выражение</param>
-            <returns>Список людей</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IHumansRepository.AddHuman(SimbirsoftWorkshop.WebApi.Models.HumanDto)">
-            <summary>
-            Добавляет нового человека
-            </summary>
-            <param name="human">Новый человек</param>
-            <returns>Результат добавления</returns>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.IHumansRepository.DeleteHumanAsync(System.Int32)">
-            <summary>
-            Удаляет человека по идентификатору
-            </summary>
-            <param name="id">Идентификатор человека</param>
-            <returns>Результат удаления</returns>
-        </member>
-        <member name="T:SimbirsoftWorkshop.WebApi.Repositories.ILibraryCardsRepository">
-            <summary>
-            Репозиторий по работе с карточками библиотеки
-            </summary>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.ILibraryCardsRepository.AddLibraryCard(SimbirsoftWorkshop.WebApi.Models.LibraryCardDto)">
-            <summary>
-            Добавляет новую карточку товара
-            </summary>
-            <param name="libraryCard">Новая карточка товара</param>
-            <returns>Результат добавления</returns>
-        </member>
-        <member name="T:SimbirsoftWorkshop.WebApi.Repositories.LibraryCardsRepository">
-            <summary>
-            Реализация репозитория для работы с карточками библиотеки в памяти
-            </summary>
-        </member>
-        <member name="F:SimbirsoftWorkshop.WebApi.Repositories.LibraryCardsRepository.libraryCardsList">
-            <summary>
-            2.1.3 - Статичный список карточек библиотеки
-            </summary>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.LibraryCardsRepository.AddLibraryCard(SimbirsoftWorkshop.WebApi.Models.LibraryCardDto)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SimbirsoftWorkshop.WebApi.Repositories.LibraryCardsRepository.GetLibraryCardExistsById(System.Int32)">
-            <summary>
-            Получает книгу по идентификатору
-            </summary>
-            <param name="id">Идентификатор книги</param>
-            <returns>Найденная книга</returns>
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.RequestResponseLogging.AppBuilderExtensions">
             <summary>
@@ -557,6 +636,28 @@
             </summary>
             <param name="context">Контекст HTTP-запроса</param>
             <returns>Задача обработки запроса</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Services.PeopleService.AddPersonAsync(SimbirsoftWorkshop.WebApi.Models.PersonDto)">
+            <summary>
+            Добавляет нового пользователя
+            </summary>
+            <param name="personDto">Новый пользователь</param>
+            <returns>Добавленный пользователь</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Services.PeopleService.UpdatePersonAsync(System.Int32,SimbirsoftWorkshop.WebApi.Models.PersonDto)">
+            <summary>
+            Изменяет информации о пользователе по идентификатору
+            </summary>
+            <param name="id">Уникальный идентификатор пользователя</param>
+            <param name="personDto">Пользователь с измененными данными</param>
+            <returns>Результат измения информации о пользователе</returns>
+        </member>
+        <member name="M:SimbirsoftWorkshop.WebApi.Services.PeopleService.DeletePersonAsync(System.Int32)">
+            <summary>
+            Удаляет пользователя по идентификатору
+            </summary>
+            <param name="id">Уникальный идентификатор пользователя</param>
+            <returns>Результат удаления</returns>
         </member>
         <member name="T:SimbirsoftWorkshop.WebApi.Sorting.EnumerableExtensions">
             <summary>

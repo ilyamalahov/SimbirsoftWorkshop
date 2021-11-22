@@ -1,48 +1,33 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SimbirsoftWorkshop.WebApi.Models;
+﻿using System.Threading.Tasks;
+using SimbirsoftWorkshop.WebApi.Data;
+using SimbirsoftWorkshop.WebApi.Entities;
 
 namespace SimbirsoftWorkshop.WebApi.Repositories
 {
-    /// <summary>
-    /// Реализация репозитория для работы с карточками библиотеки в памяти
-    /// </summary>
-    public sealed class LibraryCardsRepository : ILibraryCardsRepository
+    public class LibraryCardsRepository : ILibraryCardsRepository
     {
-        private const int identifierInitialValue = 1;
-        private const int identifierIncrementStep = 1;
+        private readonly BookLibraryContext bookLibraryContext;
 
-        /// <summary>
-        /// 2.1.3 - Статичный список карточек библиотеки
-        /// </summary>
-        private static readonly IList<LibraryCardDto> libraryCardsList = new List<LibraryCardDto>();
-
-        /// <inheritdoc/>
-        public bool AddLibraryCard(LibraryCardDto libraryCard)
+        public LibraryCardsRepository(BookLibraryContext bookLibraryContext)
         {
-            if (GetLibraryCardExistsById(libraryCard.Id))
-            {
-                return false;
-            }
-
-            libraryCard.Id = GenerateIdentifier();
-
-            libraryCardsList.Add(libraryCard);
-
-            return true;
+            this.bookLibraryContext = bookLibraryContext;
         }
 
-        /// <summary>
-        /// Получает книгу по идентификатору
-        /// </summary>
-        /// <param name="id">Идентификатор книги</param>
-        /// <returns>Найденная книга</returns>
-        private bool GetLibraryCardExistsById(int id)
-            => libraryCardsList.Any(lc => lc.Id == id);
+        public async Task<LibraryCard> GetLibraryCardAsync(int personId, int bookId)
+        {
+            return await bookLibraryContext.LibraryCards.FindAsync(bookId, personId);
+        }
 
-        private int GenerateIdentifier()
-            => libraryCardsList.Any() ?
-            libraryCardsList.Max(lc => lc.Id) + identifierIncrementStep :
-            identifierInitialValue;
+        public async Task AddLibraryCardAsync(LibraryCard libraryCard)
+        {
+            await bookLibraryContext.LibraryCards.AddAsync(libraryCard);
+            await bookLibraryContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteLibraryCardAsync(LibraryCard libraryCard)
+        {
+            bookLibraryContext.LibraryCards.Remove(libraryCard);
+            await bookLibraryContext.SaveChangesAsync();
+        }
     }
 }
